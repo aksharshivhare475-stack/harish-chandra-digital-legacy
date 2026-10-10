@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Harish-Chandra Research Explorer & Modern Nexus | CSJMU 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-dark: #0B1F33;
+      --secondary: #1E4E79;
+      --heritage-gold: #C9A227;
+      --light-accent: #E8D7A8;
+      --bg-ivory: #F7F4EC;
+      --card-white: #FFFDF8;
+      --text-charcoal: #20252B;
+      --muted-slate: #64748B;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-ivory);
+      color: var(--text-charcoal);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      color: var(--primary-dark);
+    }
+
+    .quote-font {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    /* Navbar */
+    header {
+      background: rgba(11, 31, 51, 0.96);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 2px solid var(--heritage-gold);
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .brand span { color: var(--heritage-gold); }
+    .nav-links a {
+      color: var(--light-accent);
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover { color: #fff; }
+
+    /* Hero Section */
+    .hero {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4.5rem 1.5rem 3rem;
+      text-align: center;
+    }
+    .tagline {
+      text-transform: uppercase;
+      font-size: 0.82rem;
+      letter-spacing: 2px;
+      color: var(--secondary);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+    .hero h1 {
+      font-size: 2.85rem;
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+    }
+    .hero p {
+      max-width: 780px;
+      margin: 0 auto 2rem;
+      color: var(--muted-slate);
+      font-size: 1.1rem;
+    }
+
+    /* Stat Banner */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      max-width: 1050px;
+      margin: 0 auto 3.5rem;
+    }
+    .stat-card {
+      background: var(--card-white);
+      border: 1px solid var(--light-accent);
+      border-radius: 14px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      box-shadow: 0 4px 14px rgba(11, 31, 51, 0.04);
+    }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--heritage-gold);
+      font-family: 'Playfair Display', serif;
+    }
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--muted-slate);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Controls & Filter Matrix */
+    .explorer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+    }
+    .filter-wrapper {
+      background: var(--card-white);
+      border: 1px solid var(--light-accent);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 6px 18px rgba(11, 31, 51, 0.05);
+    }
+    .search-box {
+      width: 100%;
+      padding: 0.85rem 1.2rem;
+      font-size: 1rem;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      outline: none;
+      margin-bottom: 1.25rem;
+      font-family: 'Inter', sans-serif;
+    }
+    .search-box:focus { border-color: var(--secondary); }
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+    .filter-btn {
+      background: transparent;
+      border: 1px solid var(--secondary);
+      color: var(--secondary);
+      padding: 0.45rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--secondary);
+      color: #fff;
+    }
+
+    /* Grid of Research Papers & Inventions */
+    .papers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.75rem;
+    }
+    .paper-card {
+      background: var(--card-white);
+      border: 1px solid var(--light-accent);
+      border-radius: 14px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .paper-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 22px rgba(11, 31, 51, 0.08);
+    }
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+    .badge {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 4px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .badge-math { background: #e0f2fe; color: #0369a1; }
+    .badge-phys { background: #fef3c7; color: #92400e; }
+    .card-year { font-size: 0.85rem; color: var(--muted-slate); font-weight: 600; }
+    .paper-title {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+      line-height: 1.35;
+    }
+    .paper-desc {
+      font-size: 0.92rem;
+      color: var(--muted-slate);
+      margin-bottom: 1.25rem;
+      flex-grow: 1;
+    }
+    .card-footer {
+      border-top: 1px solid #f1ede1;
+      padding-top: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .institution-tag {
+      font-size: 0.8rem;
+      color: var(--secondary);
+      font-weight: 500;
+    }
+    .action-link {
+      background: transparent;
+      border: none;
+      color: var(--heritage-gold);
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    /* Then & Now Section */
+    .then-now-section {
+      background: var(--primary-dark);
+      color: #fff;
+      padding: 4.5rem 1.5rem;
+      margin-top: 4rem;
+    }
+    .then-now-container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .then-now-title {
+      color: #fff;
+      text-align: center;
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+    }
+    .then-now-subtitle {
+      text-align: center;
+      color: var(--light-accent);
+      margin-bottom: 3rem;
+    }
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    .comparison-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(201, 162, 39, 0.35);
+      border-radius: 14px;
+      padding: 2rem;
+    }
+    .comparison-card h3 {
+      color: var(--heritage-gold);
+      margin-bottom: 0.85rem;
+      font-size: 1.35rem;
+    }
+    .comparison-card p {
+      color: #cbd5e1;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    footer {
+      background: #06111c;
+      color: var(--muted-slate);
+      text-align: center;
+      padding: 2rem 1.5rem;
+      font-size: 0.85rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header>
+    <div class="nav-container">
+      <div class="brand">HARISH-CHANDRA <span>1923–1983</span></div>
+      <nav class="nav-links">
+        <a href="#explorer">Research Explorer</a>
+        <a href="#then-now">Then &amp; Now (Modern AI)</a>
+        <a href="#collected-works">Collected Works</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="tagline">School of Basic Sciences &bull; CSJMU Kanpur</div>
+    <h1>The Architect of Infinite-Dimensional Representations</h1>
+    <p class="quote-font" style="font-size: 1.35rem; color: var(--secondary); font-style: italic;">
+      "Born in Kanpur, educated across Allahabad and Cambridge, transformed at Princeton."
+    </p>
+    <p>
+      Explore the comprehensive archive of Dr. Harish-Chandra's 85 landmark papers, fundamental mathematical discoveries, and their profound impact on modern quantum physics and computational geometry.
+    </p>
+
+    <!-- Key Metrics Highlight -->
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="stat-number">85</div>
+        <div class="stat-label">Collected Papers</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">4</div>
+        <div class="stat-label">Monumental Volumes</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">1954</div>
+        <div class="stat-label">Cole Prize in Algebra</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">Kanpur</div>
+        <div class="stat-label">B.N.S.D. College Roots</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Track 05: Research Explorer -->
+  <section id="explorer" class="explorer-container">
+    <div class="filter-wrapper">
+      <input type="text" id="searchInput" class="search-box" placeholder="Search by concept (e.g., c-function, Dirac, Lie Group, Cambridge)..." oninput="filterCards()" />
+      <div class="btn-group">
+        <button class="filter-btn active" onclick="setFilter('all', this)">All Contributions</button>
+        <button class="filter-btn" onclick="setFilter('Quantum & Physics', this)">Physics / Dirac Era</button>
+        <button class="filter-btn" onclick="setFilter('Lie Algebras', this)">Lie Algebras &amp; Representations</button>
+        <button class="filter-btn" onclick="setFilter('Harmonic Analysis', this)">Harmonic Analysis</button>
+      </div>
+    </div>
+
+    <div class="papers-grid" id="papersGrid">
+      <!-- Populated dynamically via JavaScript -->
+    </div>
+  </section>
+
+  <!-- Track 11: Then & Now Nexus -->
+  <section id="then-now" class="then-now-section">
+    <div class="then-now-container">
+      <h2 class="then-now-title">Then &amp; Now: The Contemporary Nexus</h2>
+      <p class="then-now-subtitle">Bridging Harish-Chandra's mid-century formulas with 21st-century technological frontiers</p>
+      
+      <div class="comparison-grid">
+        <div class="comparison-card">
+          <h3>Equivariant AI &amp; Geometric Deep Learning</h3>
+          <p><strong>Then:</strong> Harish-Chandra classified infinite-dimensional representations of reductive Lie groups under continuous transformations.</p>
+          <p style="margin-top: 0.75rem;"><strong>Now:</strong> Modern neural networks (E(3)-equivariant GNNs) rely on representation theory for molecular docking, protein folding, and 3D computer vision.</p>
+        </div>
+        <div class="comparison-card">
+          <h3>Langlands Program &amp; Quantum Physics</h3>
+          <p><strong>Then:</strong> Established explicit harmonic analysis on semisimple groups and character formulas alongside Armand Borel and P.A.M. Dirac.</p>
+          <p style="margin-top: 0.75rem;"><strong>Now:</strong> Serves as the bedrock of the Geometric Langlands correspondence, topological quantum field theory, and high-energy string dualities.</p>
+        </div>
+        <div class="comparison-card">
+          <h3>Harmonic Analysis &amp; Signal Wavelets</h3>
+          <p><strong>Then:</strong> Formulated Harish-Chandra Schwartz Spaces and Plancherel measures for non-compact symmetric spaces.</p>
+          <p style="margin-top: 0.75rem;"><strong>Now:</strong> Used in generalized Fourier transforms for seismic imaging, medical tomography (CT/MRI), and advanced radar signal decomposition.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Built for the Harish-Chandra 103rd Birth Anniversary Challenge 2026 &bull; Department of Mathematics, SBS, CSJMU Kanpur</p>
+  </footer>
+
+  <script>
+    const papers = [
+      {
+        title: "Infinite Irreducible Representations of Lorentz Group",
+        era: "1944–1947",
+        institution: "Cambridge / IISc",
+        category: "Quantum & Physics",
+        desc: "Pioneering mathematical bridge resolving Dirac's wave equations into generalized representation theory.",
+        badge: "Physics"
+      },
+      {
+        title: "Representations of Semisimple Lie Groups I & II",
+        era: "1951–1953",
+        institution: "Columbia University",
+        category: "Lie Algebras",
+        desc: "Introduced Harish-Chandra modules and the infinitesimal character theorem, revolutionizing modern algebra.",
+        badge: "Algebra"
+      },
+      {
+        title: "Harish-Chandra c-Function & Plancherel Formula",
+        era: "1958",
+        institution: "IAS Princeton",
+        category: "Harmonic Analysis",
+        desc: "Explicit determination of the Plancherel measure on real reductive groups, solving an open problem posed by Gelfand.",
+        badge: "Analysis"
+      },
+      {
+        title: "Discrete Series for Semisimple Lie Groups",
+        era: "1965–1966",
+        institution: "IAS Princeton",
+        category: "Lie Algebras",
+        desc: "Constructed square-integrable representations using differential equations on invariant differential operators.",
+        badge: "Algebra"
+      },
+      {
+        title: "Harmonic Analysis on Reductive p-adic Groups",
+        era: "1970–1977",
+        institution: "IAS Princeton",
+        category: "Harmonic Analysis",
+        desc: "Extended harmonic analysis to non-Archimedean local fields, providing foundational inputs to the Langlands conjecture.",
+        badge: "Analysis"
+      },
+      {
+        title: "Supertempered Distributions on Real Groups",
+        era: "1983",
+        institution: "IAS Princeton",
+        category: "Harmonic Analysis",
+        desc: "His final magnum opus completing the harmonic analysis synthesis for reductive symmetric spaces.",
+        badge: "Analysis"
+      }
+    ];
+
+    let currentFilter = 'all';
+
+    function renderCards(items) {
+      const grid = document.getElementById('papersGrid');
+      grid.innerHTML = items.map(item => `
+        <div class="paper-card">
+          <div>
+            <div class="card-meta">
+              <span class="badge ${item.badge === 'Physics' ? 'badge-phys' : 'badge-math'}">${item.badge}</span>
+              <span class="card-year">${item.era}</span>
+            </div>
+            <h3 class="paper-title">${item.title}</h3>
+            <p class="paper-desc">${item.desc}</p>
+          </div>
+          <div class="card-footer">
+            <span class="institution-tag">${item.institution}</span>
+            <button class="action-link" onclick="alert('Exploration Mode: Published in Collected Papers Vol. 1-4')">Inspect &rarr;</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterCards() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = papers.filter(p => {
+        const matchesFilter = currentFilter === 'all' || p.category === currentFilter;
+        const matchesQuery = p.title.toLowerCase().includes(query) || 
+                             p.desc.toLowerCase().includes(query) || 
+                             p.institution.toLowerCase().includes(query);
+        return matchesFilter && matchesQuery;
+      });
+      renderCards(filtered);
+    }
+
+    function setFilter(cat, btn) {
+      currentFilter = cat;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      filterCards();
+    }
+
+    // Initial render
+    renderCards(papers);
+  </script>
+</body>
+</html>
